@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "992906126327",
+    "firebase_url": "https://bitcoinchecker-70c86.firebaseio.com",
+    "project_id": "bitcoinchecker-70c86",
+    "storage_bucket": "bitcoinchecker-70c86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992906126327:android:7a028c015d01d6c3",
+        "android_client_info": {
+          "package_name": "com.example.ahmed.bitcoinchecker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992906126327-e04qnb63u4192h3tdu4rlgm1soql77cq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ahmed.bitcoinchecker",
+            "certificate_hash": "1be5ffa43ebcb30f416aa9b7c46c7d78e1155b1d"
+          }
+        },
+        {
+          "client_id": "992906126327-ifnajmj95ibm6qq0j85543oi95k2q4jv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJt3Vq_jM0QKn0jkEoJMSklqGrra9Ah7A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992906126327-ifnajmj95ibm6qq0j85543oi95k2q4jv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
