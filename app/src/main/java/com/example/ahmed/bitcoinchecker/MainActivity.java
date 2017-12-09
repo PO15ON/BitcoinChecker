@@ -50,8 +50,11 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable(){
             public void run(){
                 //do something
+                usdValue.setText("...");
+//                Log.i(TAG, "run: (Text Changed) " + usdValue.getText());
                 handler.postDelayed(this, delay);
                 new FetchBtcTask().execute(BTC_URL);
+                Log.i(TAG, "run: " + usdValue.getText());
             }
         }, delay);
     }
@@ -91,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
 
     public class FetchBtcTask extends AsyncTask<String, Void, String> {
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            usdValue.setText("...");
+        }
+
         // COMPLETED (6) Override the doInBackground method to perform your network requests
         @Override
         protected String doInBackground(String... params) {
@@ -121,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String valueData) {
             if (valueData != null) {
                 usdValue.setText(valueData);
-                Log.i(TAG, "onPostExecute: valueData = " + valueData);
+                Log.d(TAG, "onPostExecute: valueData = " + valueData);
             } else {
                 Log.i(TAG, "onPostExecute: valueData (failed) = " + valueData);
             }
