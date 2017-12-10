@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btc_value" />
 
-    <TextView
+    <EditText
         android:id="@+id/btc_value"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
