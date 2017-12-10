@@ -1,7 +1,5 @@
 package com.example.ahmed.bitcoinchecker;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +24,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 // TODO: 12/10/2017 add more currencies
+// TODO: 12/10/2017 swap between btc and usd
 public class MainActivity extends AppCompatActivity {
 
     public static final String BTC_URL = "https://api.coindesk.com/v1/bpi/currentprice/btc.json";
@@ -58,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usdValue = (TextView) findViewById(R.id.usd_value);
-        refreshButton = (Button) findViewById(R.id.refresh_button);
-        btcValue = (EditText) findViewById(R.id.btc_value);
+        usdValue = findViewById(R.id.usd_value);
+        refreshButton = findViewById(R.id.refresh_button);
+        btcValue = findViewById(R.id.btc_value);
 
         new FetchBtcTask().execute(BTC_URL);
 
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     private URL urlBuilder(String uri) {
         Uri builtUri = Uri.parse(uri).buildUpon().build();
 
-        URL url = null;
+        URL url;
 
         try {
             url = new URL(builtUri.toString());
@@ -113,13 +112,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String jsonParser(Context context, String jsonWeatherResponse) throws JSONException {
+    private String jsonParser(String jsonWeatherResponse) throws JSONException {
         JSONObject jsonObject = new JSONObject(jsonWeatherResponse);
         JSONObject bpi = jsonObject.getJSONObject("bpi");
         JSONObject usd = bpi.getJSONObject("USD");
-        String value = usd.getString("rate_float");
 
-        return value;
+        return usd.getString("rate_float");
     }
 
     public class FetchBtcTask extends AsyncTask<String, Void, String> {
@@ -143,9 +141,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 String jsonBtcResponse = getResponseFromHttpUrl(weatherRequestUrl);
 
-                String simpleJsonBtcData = jsonParser(MainActivity.this, jsonBtcResponse);
-
-                return simpleJsonBtcData;
+                return jsonParser(jsonBtcResponse);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -158,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
             try {
 //                double newValue = Double.parseDouble(valueData.toString()) * Integer.parseInt(String.valueOf(btcValue.getText()));
                 double newValue;
-                double newValueData = Double.parseDouble(valueData.toString());
-                int newBtc = Integer.parseInt(String.valueOf(btcValue.getText()));
+                double newValueData = Double.parseDouble(valueData);
+                double newBtc = Double.parseDouble(String.valueOf(btcValue.getText()));
                 newValue = newValueData * newBtc;
 //                Log.i(TAG, "onPostExecute: newValueData = " + newValueData);
                 if (valueData != null) {
@@ -171,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 Log.i(TAG, "onPostExecute: Exception " + valueData + " btcValue = " + btcValue.getText());
-//                Log.i(TAG, "onPostExecute: newValue = " + Integer.parseInt(btcValue.getText().toString()));
             }
         }
     }
