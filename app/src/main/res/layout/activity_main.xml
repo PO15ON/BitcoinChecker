@@ -44,6 +44,7 @@
         android:layout_width="69dp"
         android:layout_height="56dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="156dp"
         android:layout_marginStart="156dp"
         android:layout_marginTop="8dp"
         android:text="="
@@ -54,8 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.266"
-        android:layout_marginLeft="156dp" />
+        app:layout_constraintVertical_bias="0.266" />
 
     <TextView
         android:id="@+id/usd_value"
@@ -65,7 +65,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="112dp"
         android:ems="5"
-        android:text="1"
+        android:text=""
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="24sp"

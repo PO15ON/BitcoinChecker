@@ -1,5 +1,7 @@
 package com.example.ahmed.bitcoinchecker;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
         refreshButton = findViewById(R.id.refresh_button);
         btcValue = findViewById(R.id.btc_value);
 
+
+        if (!isNetworkConnected()) {
+            Toast.makeText(this, "Check your connection", Toast.LENGTH_SHORT).show();
+        }
         new FetchBtcTask().execute(BTC_URL);
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run() {
                 //do something
-                usdValue.setText("...");
+//                usdValue.setText("...");
 //                Log.i(TAG, "run: (Text Changed) " + usdValue.getText());
                 handler.postDelayed(this, delay);
                 new FetchBtcTask().execute(BTC_URL);
@@ -97,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private URL urlBuilder(String uri) {
         Uri builtUri = Uri.parse(uri).buildUpon().build();
@@ -120,12 +128,18 @@ public class MainActivity extends AppCompatActivity {
         return usd.getString("rate_float");
     }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }
+
     public class FetchBtcTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            usdValue.setText("...");
+            usdValue.setTextColor(getColor(R.color.colorAccent));
         }
 
         @Override
@@ -164,10 +178,12 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Log.i(TAG, "onPostExecute: valueData (failed) = " + newValue);
                 }
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(MainActivity.this, "Check your connection", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "onPostExecute: Exception " + valueData + " btcValue = " + btcValue.getText());
             }
+            usdValue.setTextColor(getColor(R.color.colorPrimary));
         }
     }
 
